@@ -1,14 +1,35 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import  path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
+const __dirname = path.resolve();
+
+export default {
   // Entry point of your app
-  entry: './src/index.js',
+  entry: './src/index.ts',
 
   // Output configuration
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'), // Output directory
+    clean: true,
+    module: true,
+  },
+  experiments: {
+    outputModule: true,
+    topLevelAwait: true,
+  },
+
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'], // Add .ts and .tsx extensions to resolve TypeScript files
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/, // Matches both .ts and .tsx files
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
 
   // Mode: 'development' or 'production'
